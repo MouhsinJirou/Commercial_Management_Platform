@@ -1,0 +1,80 @@
+<div class="container">
+  <!-- Confirmation-->
+  <div class="row">
+
+    <div class="col-sm ">
+      <div  *ngIf="confirmation===true" class="alert alert-success col-sm " role="alert">
+
+        <p align="center"> <strong> Le client a été bien ajouté !</strong> </p>
+      </div>
+
+      <div *ngIf="confirmation===false" class="alert alert-danger col-sm " role="alert">
+
+        <p align="center"> <strong> Une erreur est introduite lors de l'ajout du client !</strong> </p>
+      </div>
+
+    </div>
+  </div>
+  <div class="card">
+    <!--header-->
+    <div class="card-header card-header-danger">
+      <div class="row">
+        <div class="col-lg-11 col-md-12">
+          <h4 class="card-title">Ajouter client</h4>
+          <p class="card-category">Veuillez saisir les informations suivantes</p>
+        </div>
+        <div class="col-lg-1 col-md-12">
+          <i class="fas fa-plus fa-4x"></i>
+        </div>
+      </div>
+    </div>
+    <!--formulaire-->
+    <div class="card-body">
+      <form #f="ngForm" (ngSubmit)="onSaveClient(f.value,f)" class="text-center border border-light p-3">
+
+        <!-- nom-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="text"  class="form-control mb-4" placeholder="nom" ngModel name="nomClient" required>
+          </div>
+        </div>
+
+        <!-- prenom -->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="text"  class="form-control mb-4" placeholder="prenom" ngModel name="prenomClient" required>
+          </div>
+        </div>
+        <!-- adresse-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="text"  class="form-control mb-4" placeholder="adresse" ngModel name="adresse" required>
+          </div>
+        </div>
+        <!-- tel-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="tel"  class="form-control mb-4" placeholder="tel" ngModel name="tel" required>
+          </div>
+        </div>
+        <!-- email-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="text"  class="form-control mb-4" placeholder="email" ngModel name="email" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-12"></div>
+
+          <div class="col-lg-3 col-md-12">
+            <div class="col"><button [disabled]="!f.valid" mdbBtn color="danger" block="true" class="my-10" type="submit">Ajouter</button></div>
+          </div>
+          <div class="col-lg-3 col-md-12">
+            <div class="col"><button routerLink="/client" mdbBtn color="danger" block="true" class="my-10" type="button">Fermer</button></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="card">
+    <!--header-->
+    <div class="card-header card-header-danger">
+      <div class="row">
+        <div class="col-lg-11 col-md-12">
+          <h4 class="card-title">Ajouter une facture</h4>
+          <p class="card-category">Veuillez saisir les informations suivantes</p>
+        </div>
+        <div class="col-lg-1 col-md-12">
+          <i class="fas fa-plus fa-4x"></i>
+        </div>
+      </div>
+    </div>
+    <!--formulaire-->
+    <div class="card-body">
+      <form #f="ngForm"  class="text-center border border-light p-5">
+
+        <!-- date-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="date"  class="form-control mb-4" placeholder="date" [(ngModel)]="dateFacture" name="date" required>
+          </div>
+        </div>
+        <!-- mode payement  un traitement special au cas de credit-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <select  (change)="onSelect($event)" class="browser-default custom-select mb-4">
+              <option disabled selected value="Mode Payement">Mode Payement</option>
+              <option value="Espece">Espece</option>
+              <option  value="Crédit">Crédit</option>
+            </select>
+
+          </div>
+          <div class="col-sm-2 align-middle">
+            <span class="badge-success">{{select}}</span>
+          </div>
+        </div>
+        <!-- Le montant à verser au cas le choix de paiement est crédit -->
+        <div class="row" *ngIf="isSelected" >
+          <div class="col-lg-6 col-md-12">
+            <input type="number"  class="form-control mb-4" placeholder="Montant à verser" [(ngModel)]="montantVerse" name="montantVerse" required>
+          </div>
+        </div>
+        <!-- statut-->
+
+        <!-- Client-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <select class="browser-default custom-select mb-4" name="Client" [(ngModel)]="client">
+              <option disabled selected>Client</option>
+              <option *ngFor="let c of listClients" [ngValue]="c">{{c.nomClient}} {{c.prenomClient}}</option>
+            </select>
+          </div>
+        </div>
+        <!-- Liste des produit-->
+        <div class="form-row" *ngFor="let obj of array let i=index">
+          <div class="form-group col-md-3">
+            <!-- produit-->
+            <select (change)="onProduit($event)" class="browser-default custom-select" name="Produit" [(ngModel)]="obj.produit" (ngModelChange)="onchange(obj.produit)">
+              <option disabled selected>Produit</option>
+
+              <option name="produit{{i}}" [(ngModel)]="obj.produit"  *ngFor="let c of listProduits " [ngValue]="c">{{c.designation}}[Stock:{{c.nivStock}}] </option>
+
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <!-- prix-->
+            <input type="number" class="form-control" placeholder="Prix" [(ngModel)]="obj.prix" (ngModelChange)="onPrix(obj.prix)" name="prix{{i}}" required>
+          </div>
+          <div class="form-group col-md-2">
+            <!-- qte-->
+            <input type="number" class="form-control" placeholder="Qte" [(ngModel)]="obj.qte" (ngModelChange)= "onQte(obj.qte)" name="qte{{i}}" required>
+          </div>
+
+          <div class="form-group col-md-1" *ngIf="i!=0">
+            <!-- - -->
+            <span (click)="removeRow(i)" class="btn btn-danger btn-sm">-</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-3"> </div>
+          <div class="form-group col-md-2"> </div>
+          <div class="form-group col-md-2">
+            <span  class="text-danger font-weight-bold"> Montant total= {{total2}}</span>
+          </div>
+        </div>
+        <div class="form-group col-md-1">
+          <!-- + -->
+          <span (click)="addRow()" class="btn btn-success m-0 btn-sm">+</span>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-md-12"> </div>
+
+          <div class="col-lg-3 col-md-12">
+            <div class="col"><button [disabled]="!f.valid" mdbBtn color="danger" block="true" class="my-10" type="submit" (click)= "onSave()">Ajouter</button></div>
+          </div>
+          <div class="col-lg-3 col-md-12">
+            <div class="col"><button routerLink="/facture" mdbBtn color="danger" block="true" class="my-10" type="button">Fermer</button></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

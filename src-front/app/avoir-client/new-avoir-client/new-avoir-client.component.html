@@ -1,0 +1,133 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card">
+        <!-- header -->
+        <div class="card-header card-header-danger">
+          <div class="row">
+            <div class="col-lg-10 col-md-12">
+              <h4 class="card-title">Nouveau Avoir Client</h4>
+              <p class="card-category">Veuillez saisir l'Id de la facture</p>
+            </div>
+            <div class="col-lg-2 col-md-12">
+              <i class="fas fa-plus fa-4x"></i>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="row spacerleft">
+            <div class="form-row mb-4">
+
+              <!-- Entrer ID facture -->
+              <div class="col">
+                <input type="number" class="form-control" placeholder="ID_Facture" name="idFacture" [(ngModel)]="idFacture" required>
+              </div>
+              <div class="col">
+                <button (click)="chercher()"  mdbBtn type="button" size="sm"color="light" class="m-0" mdbWavesEffect>Chercher</button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- tableau -->
+          <table class="table table-striped table-responsive-md btn-table ">
+
+            <thead>
+            <tr>
+
+              <!-- Details de la facture saisie -->
+              <th>Designation</th>
+              <th>Prix</th>
+              <th>Quantité</th>
+              <th>Total</th>
+
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let c of detailFacture">
+
+              <td>{{c[0].designation}}</td>
+              <td>{{c[1]}}</td>
+              <td>{{c[2]}}</td>
+              <td>{{c[3]}}</td>
+
+
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <button type="button" routerLink="/avoir-client" mdbBtn color="secondary" class="default" aria-label="Close" mdbWavesEffect>Retour</button>
+
+
+
+
+    </div>
+    <div class="col-md-5">
+
+      <!-- Liste des produits à rendre -->
+      <div class="card">
+        <!--header-->
+        <div class="card-header card-header-danger">
+          <h2 class="font-weight-bold spacer text-center text-white">Liste des produits à rendre</h2>
+        </div>
+        <!--formulaire-->
+        <div class="card-body ">
+          <form #f="ngForm"  class="text-center border border-light">
+            <!-- Liste des produit-->
+            <div class="form-row" *ngFor="let obj of array let i=index">
+              <div class="row p-2">
+                <div class="col-lg-1 col-md-12"></div>
+                <div class="col-lg-5 col-md-12">
+                  <!-- produit-->
+                  <select class="browser-default custom-select" name="Produit" [(ngModel)]="obj.produit" (ngModelChange)="onchange(obj.produit)">
+                    <option disabled selected>Produit</option>
+
+                    <option name="produit{{i}}" [(ngModel)]="obj.produit"  *ngFor="let c of detailFacture " [ngValue]="c">{{c[0].designation}} </option>
+
+                  </select>
+                </div>
+
+                <div class="col-lg-3 col-md-12">
+                  <!-- qte-->
+                  <input type="number" class="form-control" placeholder="Qte" [(ngModel)]="obj.qte"  name="qte{{i}}" (ngModelChange)="onQte(obj.qte)" required>
+                </div>
+                <div class="col-lg-1 col-md-12" *ngIf="i!=0">
+                  <!-- - -->
+                  <span (click)="removeRow(i)" class="btn btn-danger btn-sm">-</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3"> </div>
+              <div class="form-group col-md-2"> </div>
+              <div class="form-group col-md-3">
+                <span  class="text-danger font-weight-bold"> Montant total= {{total2}}</span>
+              </div>
+            </div>
+            <div class="form-group col-md-1">
+              <!-- + -->
+              <span (click)="addRow()" class="btn btn-success m-0 btn-sm">+</span>
+            </div>
+
+            <div class="form-row mb-2">
+
+              <div class="col"><button (click)= "onSaveAvoir()" [disabled]="!f.valid" mdbBtn color="danger" block="true" class="my-10" type="submit">Rendre</button></div>
+
+            </div>
+          </form>
+
+
+
+
+          <!-- Card Dark -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="card">
+    <!-- header -->
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9"><h2 class="font-weight-bold cyan-lighter-hover mb-3 spacer">Clients</h2></div>
+        <div class="col-md-3"><button routerLink="/new-client" type="button" class="btn btn-outline-primary waves-effect">Ajouter Client</button>
+        </div>
+      </div>
+    </div>
+    <!-- body -->
+    <div class="card-body">
+      <!-- search -->
+      <div class="row">
+        <div class="col-md-9">
+          <form class="form-inline md-form mr-auto mb-4">
+            <input class="form-control mr-sm-2" type="text" placeholder="chercher" aria-label="Search" name="nom" [(ngModel)]="nom">
+            <button (click)="chercher()" mdbBtn size="sm" gradient="aqua" rounded="true" class="my-0 waves-light" mdbWavesEffect type="submit">Chercher</button>
+          </form>
+        </div>
+
+      </div>
+      <!-- tableau -->
+      <table class="table table-striped table-responsive-md btn-table ">
+
+        <thead>
+        <tr>
+
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>Adresse</th>
+          <th>Telephone</th>
+          <th>Email</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let c of pageClients?.content">
+          <td>{{c.nomClient}}</td>
+          <td>{{c.prenomClient}}</td>
+          <td>{{c.adresse}}</td>
+          <td>{{c.tel}}</td>
+          <td>{{c.email}}</td>
+
+
+
+          <td>
+            <button (click)="onUpdate(basicModal,c)" mdbBtn type="button" size="sm"color="info" mdbWavesEffect>modifier</button>
+            <button  (click)="onDeleteClient(c)" mdbBtn type="button" size="sm"color="danger" mdbWavesEffect>supprimer</button>
+            <button (click)="onFacture(c.idClient)" mdbBtn type="button" size="sm"color="success" mdbWavesEffect>Factures</button>
+            <button (click)="onAvoir(c.idClient)" mdbBtn type="button" size="sm"color="info" mdbWavesEffect>Avoir</button>
+          </td>
+        </tr>
+
+
+        </tbody>
+
+      </table>
+      <!-- pagination -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination pg-blue">
+          <li class="page-item">
+            <a class="page-link" disabled="!currentPage>0" tabindex="-1" (click)="gotoPage(currentPage-1)" mdbWavesEffect>Precedent</a>
+          </li>
+          <li class="page-item" [ngClass]="{'page-item active':i==currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="page-link" (click)="gotoPage(i)" mdbWavesEffect>{{i}}</a>
+          </li>
+
+          <li class="page-item">
+            <a class="page-link" disabled="!currentPage<totalpage-1" (click)="gotoPage(currentPage+1)" mdbWavesEffect>Suivant</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- editer Modal -->
+
+<div style=" overflow-y: scroll" mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content card">
+      <div class="modal-header card-header card-header-success">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Modifier client</h4>
+      </div>
+      <form #f="ngForm" (ngSubmit)="updateClient(f.value)" class="text-center border border-light p-5">
+
+        <!-- Nom-->
+        <div class="form-row mb-4">
+          <label class="text-left">Nom</label>
+          <input type="text"  class="form-control " placeholder="Nom" [(ngModel)]="client.nomClient" name="nom" required>
+        </div>
+
+
+        <!-- Prenom -->
+        <div class="form-row mb-4">
+          <label class="text-left">Prenom</label>
+          <input type="text" class="form-control" placeholder="Prenom" [(ngModel)]="client.prenomClient" name="prenom" required>
+        </div>
+        <!-- Adresse -->
+        <div class="form-row mb-4">
+          <label class="text-left">Adresse</label>
+          <input type="text" class="form-control" placeholder="Adresse" [(ngModel)]="client.adresse" name="adresse" required>
+        </div>
+        <!-- Telephone-->
+        <div class="form-row mb-4">
+          <label class="text-left">Telephone</label>
+          <input type="number"  class="form-control" placeholder="Telephone" [(ngModel)]="client.tel" name="tel" required>
+        </div>
+        <!-- Email -->
+        <div class="form-row mb-4">
+          <label class="text-left">Email</label>
+          <input type="text" class="form-control" placeholder="Email" [(ngModel)]="client.email" name="email" required>
+        </div>
+
+
+        <div class="modal-footer card-footer">
+          <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+          <button (click)="basicModal.hide()" type="submit"  mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

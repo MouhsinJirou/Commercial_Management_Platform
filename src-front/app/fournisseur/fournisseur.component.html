@@ -1,0 +1,134 @@
+<div class="container">
+  <!-- Confirmation-->
+  <div class="row">
+
+    <div class="col-sm ">
+      <div  *ngIf="confirmation===true" class="alert alert-success col-sm " role="alert">
+
+        <p align="center"> <strong> Mise à jour effectué !</strong> </p>
+      </div>
+
+      <div *ngIf="confirmation===false" class="alert alert-danger col-sm " role="alert">
+
+        <p align="center"> <strong> Une erreur est introduite lors de la modification !</strong> </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <!-- header -->
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9"><h2 class="font-weight-bold cyan-lighter-hover mb-3 spacer">Fournisseur</h2></div>
+        <div class="col-md-3"><button routerLink="/new-fournisseur" type="button" class="btn btn-outline-primary waves-effect">Ajouter Fournisseur</button>
+        </div>
+      </div>
+    </div>
+    <!-- body -->
+    <div class="card-body">
+      <!-- search -->
+      <div class="row">
+        <div class="col-md-9">
+          <form class="form-inline md-form mr-auto mb-4">
+            <input class="form-control mr-sm-2" type="text" placeholder="chercher" name="nom" aria-label="Search" [(ngModel)]="nom">
+            <button (click)="chercher()" mdbBtn size="sm" gradient="aqua" rounded="true" class="my-0 waves-light" mdbWavesEffect type="submit">Chercher</button>
+          </form>
+        </div>
+
+      </div>
+      <!-- tableau -->
+      <table class="table table-striped table-responsive-md btn-table ">
+        <thead>
+        <tr>
+          <th>Nom societé</th>
+          <th>Adresse</th>
+          <th>Tel</th>
+          <th>Email</th>
+          <th>Options</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let c of pageFournisseurs?.content">
+          <td>{{c.nomSociete}}</td>
+          <td>{{c.adresse}}</td>
+          <td>{{c.tel}}</td>
+          <td>{{c.email}}</td>
+          <td>
+
+            <button (click)="onEditFournisseur(editModel,c)" mdbBtn type="button" size="sm"color="info" mdbWavesEffect>modifier</button>
+            <button (click)="onDeleteFournisseur(c)" mdbBtn type="button" size="sm"color="danger"  mdbWavesEffect>supprimer</button>
+            <button (click)="listBonAchat(c.idFournisseur)" mdbBtn type="button" size="sm"color="success" mdbWavesEffect>bons d'achats</button>
+            <button (click)="listAvoir(c.idFournisseur)" mdbBtn type="button" size="sm"color="info" mdbWavesEffect>Avoirs</button>
+          </td>
+        </tr>
+
+        </tbody>
+
+      </table>
+      <!-- pagination -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination pg-blue">
+          <li class="page-item">
+            <a class="page-link" disabled="!currentPage>0" tabindex="-1" (click)="gotoPage(currentPage-1)" mdbWavesEffect>Precedent</a>
+          </li>
+          <li class="page-item" [ngClass]="{'page-item active':i==currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="page-link" (click)="gotoPage(i)" mdbWavesEffect>{{i}}</a>
+          </li>
+
+          <li class="page-item">
+            <a class="page-link" disabled="!currentPage<totalpage-1" (click)="gotoPage(currentPage+1)" mdbWavesEffect>Suivant</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<!--Edit Modal -->
+
+
+<div style="overflow-y: scroll" mdbModal #editModel="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content card">
+      <div class="modal-header card-header card-header-success">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="editModel.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Modification fournisseur</h4>
+      </div>
+      <form #f="ngForm" (ngSubmit)="updateFournisseur(f.value)" class="text-center border border-light p-5">
+
+        <!-- Nom societe-->
+        <div class="form-row">
+          <label class="text-left">Nom societe :</label>
+          <input type="text"  class="form-control mb-4" placeholder="Nom societe" [(ngModel)]="fournisseur.nomSociete" name="nomSociete" required>
+        </div>
+
+        <!-- Adresse-->
+        <div class="form-row">
+          <label class="text-left">Adresse :</label>
+          <input type="text"  class="form-control mb-4" placeholder="Adresse" [(ngModel)]="fournisseur.adresse" name="adresse" required>
+        </div>
+        <!-- Tel -->
+        <div class="form-row">
+          <label class="text-left">Tel :</label>
+          <input type="number" class="form-control mb-4" placeholder="Tel" [(ngModel)]="fournisseur.tel" name="tel" required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-row">
+          <label class="text-left">Email :</label>
+          <input type="text"  class="form-control mb-4" placeholder="Email" [(ngModel)]="fournisseur.email" name="email" required>
+        </div>
+
+      <div class="modal-footer card-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="editModel.hide()" mdbWavesEffect>Fermer</button>
+        <button type="submit" mdbBtn color="primary" class="relative waves-light" (click)="editModel.hide()" mdbWavesEffect>Save changes</button>
+      </div>
+      </form>
+
+    </div>
+  </div>
+</div>

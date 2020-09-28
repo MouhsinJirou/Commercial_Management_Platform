@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm ">
+
+      <div *ngIf="confirmation===false" class="alert alert-danger col-sm " role="alert">
+
+        <p align="center"> <strong> Une erreur est introduite lors du versement !</strong> </p>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="card">
+    <!--header-->
+    <div class="card-header card-header-danger">
+      <div class="row">
+        <div class="col-lg-11 col-md-12">
+          <h4 class="card-title">Verser client</h4>
+          <p class="card-category">Veuillez saisir les informations suivantes</p>
+        </div>
+        <div class="col-lg-1 col-md-12">
+          <i class="fas fa-plus fa-4x"></i>
+        </div>
+      </div>
+    </div>
+    <!--formulaire-->
+    <div class="card-body">
+      <form #f="ngForm" (ngSubmit)="verser(f.value)" class="text-center border border-light p-4">
+
+        <!-- Id Achat-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="number"  class="form-control mb-4"  [ngModel]="idFacture" name="idFacture"  readonly  >
+          </div>
+        </div>
+        <!-- Montant Versé-->
+        <div class="row">
+          <div class="col">
+            <div class="form-row">
+              <input type="number"  class="form-control mb-4" placeholder="montantVerse" ngModel name="montantVerse" required>
+            </div>
+          </div>
+          <!-- Span Crédit -->
+          <div class="col">
+            <div class="form-row">
+              <span class="text-danger font-weight-bold">Crédit restant : {{credits}}</span>
+            </div>
+          </div>
+        </div>
+        <!-- Date-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="date"  class="form-control mb-4" placeholder="Date" [ngModel]="myDate"  name="date" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-md-12"></div>
+
+          <div class="col-lg-3 col-md-12">
+            <div class="col"><button [disabled]="!f.valid" mdbBtn color="danger" block="true" class="my-10" type="submit">Verser</button></div>
+          </div>
+          <div class="col-lg-3 col-md-12">
+            <div class="col"><button routerLink="/paiement-client" mdbBtn color="danger" block="true" class="my-10" type="button">Fermer</button></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

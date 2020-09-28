@@ -1,0 +1,48 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S'identifier</title>
+</head>
+<body>
+<!-- Main Content -->
+<div class="container-fluid ">
+  <div class="row main-content bg-success text-center">
+    <div class="col-md-4 text-center company__info">
+      <span class="company__logo"><img src="./assets/img/ds2.jpg" height="100px" width="100px"></span>
+      <h4 class="company_title">DROUGSOFT</h4>
+    </div>
+    <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-2"></div>
+          <h2>S'identifier</h2>
+        </div>
+        <div class="row">
+          <form ngNativeValidate control="" class="form-group"  #f="ngForm" (ngSubmit)="onLogin(f.value)">
+            <div class="alert alert-danger" *ngIf="mode==1">
+              <strong>Nom d'utilisateur ou mot de passe invalide !</strong>
+            </div>
+            <div class="row">
+              <input type="text" name="username" ngModel id="username" class="form__input" placeholder="Nom d'utilisateur" required>
+            </div>
+            <div class="row">
+              <!-- <span class="fa fa-lock"></span> -->
+              <input type="password" name="password" ngModel id="password" class="form__input" placeholder="Mot de passe" required minlength="4">
+            </div>
+
+            <div class="row">
+              <div class="col-sm-2"></div>
+              <input type="submit" value="S'identifier" [disabled]="!f.valid" class="btn">
+            </div>
+          </form>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

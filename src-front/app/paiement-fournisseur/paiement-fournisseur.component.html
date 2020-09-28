@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="card">
+    <!-- header -->
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9"><h2 class="font-weight-bold cyan-lighter-hover mb-3 spacer">Paiement Fournisseur</h2></div>
+      </div>
+    </div>
+
+    <!-- body -->
+    <div class="card-body">
+      <!-- search -->
+      <div class="row">
+        <div class="col-md-9">
+          <form class="form-inline md-form mr-auto mb-4">
+            <input class="form-control mr-sm-2" type="text" name="nom" placeholder="entrer le nom du fournisseur" [(ngModel)]="nom" aria-label="Search">
+            <button (click)="chercher()" mdbBtn size="sm" gradient="aqua" rounded="true" class="my-0 waves-light" mdbWavesEffect type="submit">Chercher</button>
+          </form>
+        </div>
+
+        <!-- tableau -->
+        <table class="table table-striped table-responsive-md btn-table ">
+
+          <thead>
+          <tr>
+            <th>Id Transaction</th>
+            <th>Montant Versé</th>
+            <th>Date</th>
+            <th>Id Achat</th>
+            <th>Fournisseur</th>
+            <th>Options</th>
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let c of pagePaiementFournisseurs?.content">
+            <th>{{c.idPaiementFournisseur}}</th>
+            <td>{{c.montantVerse}}</td>
+            <td>{{c.date}}</td>
+            <th>{{c.bonAchat.idBonAchat}}</th>
+            <th>{{c.bonAchat.fournisseur.nomSociete}}</th>
+            <button (click)="onDeletePaiementFournisseur(c)" mdbBtn type="button" size="sm"color="danger"  mdbWavesEffect>supprimer</button>
+
+
+          </tr>
+          </tbody>
+
+        </table>
+        <!-- pagination -->
+        <nav aria-label="Page navigation example">
+          <ul class="pagination pg-blue">
+            <li class="page-item">
+              <a class="page-link" disabled="!currentPage>0" tabindex="-1" (click)="gotoPage(currentPage-1)" mdbWavesEffect>Precedent</a>
+            </li>
+            <li class="page-item" [ngClass]="{'page-item active':i==currentPage}" *ngFor="let p of pages; let i=index">
+              <a class="page-link" (click)="gotoPage(i)" mdbWavesEffect>{{i}}</a>
+            </li>
+
+            <li class="page-item">
+              <a class="page-link" disabled="!currentPage<totalpage-1" (click)="gotoPage(currentPage+1)" mdbWavesEffect>Suivant</a>
+            </li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+  </div>
+</div>
+

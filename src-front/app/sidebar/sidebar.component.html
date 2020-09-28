@@ -1,0 +1,205 @@
+<div class="sidebar" data-color="azure" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+  <!--
+    Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+    Tip 2: you can also add an image using data-image tag
+-->
+  <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+    DrougSoft
+  </a></div>
+  <div class="sidebar-wrapper">
+
+    <ul class="nav"  >
+
+      <li  class="nav-item   " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link" routerLink="/accueil">
+          <i class="material-icons">dashboard</i>
+          <p>Accueil</p>
+        </a>
+      </li>
+
+      <li *ngIf="admin" class="nav-item dropdown"   >
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">face </i>
+            <span>Utilisateur</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" *ngIf="admin" routerLink="/liste-utilisateur" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Liste des utilisateurs</a>
+            <a class="dropdown-item" *ngIf="admin" routerLink="/new-utilisateur" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" >Nouveau utilisateur</a>
+
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown"   >
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">receipt </i>
+            <span>Facture</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/facture" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Liste des factures</a>
+            <a class="dropdown-item" routerLink="/new-facture" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" >Nouvelle facture</a>
+
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">library_books </i>
+            <span>Devis</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/devis" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Liste des devis</a>
+            <a class="dropdown-item" routerLink="/new-devis" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Nouveau devis</a>
+
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">store </i>
+            <span>Produit</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/produit" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Liste des produits</a>
+            <a class="dropdown-item" routerLink="/new-produit" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Ajouter un produit</a>
+
+          </div>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">shopping_cart </i>
+            <span>Achat</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/bon-achat" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Liste des achats</a>
+            <a class="dropdown-item" routerLink="/new-bon-achat" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Ajouter un achat</a>
+
+          </div>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">local_offer </i>
+            <span>Charges</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/charge" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Liste des charges</a>
+            <a class="dropdown-item" routerLink="/new-charge" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Ajouter une charge</a>
+
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">attach_money </i>
+            <span>Paiements</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/paiement-client" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Paiements des clients</a>
+            <a class="dropdown-item" routerLink="/paiement-fournisseur" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Paiements des fournisseurs</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">refresh </i>
+            <span>Avoirs</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/avoir-client" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Avoirs des clients</a>
+            <a class="dropdown-item" routerLink="/avoir-fournisseur" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Avoirs des fournisseurs</a>
+            <a class="dropdown-item" routerLink="/new-avoir-client" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Nouveau avoir client</a>
+            <a class="dropdown-item" routerLink="/new-avoir-fournisseur" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Nouveau avoir fournisseur</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">show_chart </i>
+            <span>Statistiques</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/statistique" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Rapports</a>
+            <a class="dropdown-item" routerLink="/vente-jour" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Ventes du jour</a>
+            <a class="dropdown-item" routerLink="/achat-jour" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Achats du jour</a>
+            <a class="dropdown-item" routerLink="/charge-jour" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Charges du jour</a>
+            <a class="dropdown-item" routerLink="/vente-mois" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Ventes du mois</a>
+            <a class="dropdown-item" routerLink="/achat-mois" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Achats du mois</a>
+            <a class="dropdown-item" routerLink="/charge-mois" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Charges du mois</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link" routerLink="/alert">
+          <i class="material-icons">warning</i>
+          <p>Alert du stock</p>
+        </a>
+      </li>
+
+      <li class="nav-item dropdown" >
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">people_alt </i>
+            <span>Clients</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item"routerLink="/client" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Liste des clients</a>
+            <a class="dropdown-item"routerLink="/new-client" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Nouveau client</a>
+
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">people </i>
+            <span>Fournisseurs</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/fournisseur" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Liste des fournisseur</a>
+            <a class="dropdown-item"routerLink="/new-fournisseur" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Nouveau fournisseur</a>
+
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <div class="dropdown" mdbDropdown>
+          <a  mdbDropdownToggle class="nav-link dropdown-toggle">
+            <i class="material-icons">home_work </i>
+            <span>Dépots</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right"  >
+            <a class="dropdown-item" routerLink="/depot" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Liste des dépots</a>
+            <a class="dropdown-item" routerLink="/new-depot" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">Nouveau dépot</a>
+
+          </div>
+        </div>
+      </li>
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>

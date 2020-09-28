@@ -1,0 +1,114 @@
+<div class="container">
+  <div class="card">
+    <!-- header -->
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9"><h2 class="font-weight-bold cyan-lighter-hover mb-3 spacer">Avoirs du client</h2></div>
+        <div class="col-md-3"><button routerLink="/new-avoir-client" type="button" class="btn btn-outline-primary waves-effect">Nouveau avoir</button>
+        </div>
+      </div>
+    </div>
+    <!-- body -->
+    <div class="card-body">
+      <!-- search -->
+      <div class="row">
+        <div class="col-md-9">
+          <form class="form-inline md-form mr-auto mb-4">
+            <input class="form-control mr-sm-2" type="text" placeholder="chercher" name="nom" aria-label="Search" [(ngModel)]="nom">
+            <button (click)="chercher()" mdbBtn size="sm" gradient="aqua" rounded="true" class="my-0 waves-light" mdbWavesEffect type="submit">Chercher</button>
+          </form>
+        </div>
+
+      </div>
+      <!-- tableau -->
+      <table class="table table-striped table-responsive-md btn-table ">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Date</th>
+          <th>Montant Rendu</th>
+          <th>Id Facture</th>
+          <th>Client</th>
+          <th>Option</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let c of pageAvoirs?.content">
+          <th>{{c.idAvoirClient}}</th>
+          <td>{{c.dateAvoirClient}}</td>
+          <td>{{c.montantAvoirCl}}</td>
+          <td>{{c.facture.idFacture}}</td>
+          <td>{{c.facture.client.nomClient}}</td>
+
+          <td>
+
+            <button (click)="onDetailAvoir(detailModal,c)" mdbBtn type="button" size="sm"color="info" mdbWavesEffect>Detail</button>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+      <!-- pagination -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination pg-blue">
+          <li class="page-item">
+            <a class="page-link" disabled="!currentPage>0" tabindex="-1" (click)="gotoPage(currentPage-1)" mdbWavesEffect>Precedent</a>
+          </li>
+          <li class="page-item" [ngClass]="{'page-item active':i==currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="page-link" (click)="gotoPage(i)" mdbWavesEffect>{{i}}</a>
+          </li>
+
+          <li class="page-item">
+            <a class="page-link" disabled="!currentPage<totalpage-1" (click)="gotoPage(currentPage+1)" mdbWavesEffect>Suivant</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+<!-- Detail Modal -->
+
+
+<div style=" overflow-y: scroll" mdbModal #detailModal="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="card">
+      <div class="card-header card-header-success">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="detailModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Détails</h4>
+      </div>
+
+      <div class="card-body">
+        <table class="table table-striped table-responsive-md btn-table ">
+          <thead>
+          <tr>
+            <th>Désignation</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+            <th>Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let d of pageDetailAvoir">
+            <td>{{d.produit.designation}}</td>
+            <td>{{d.qte}}</td>
+            <td>{{d.prix}}</td>
+            <td>{{d.qte*d.prix}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="detailModal.hide()" mdbWavesEffect>Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

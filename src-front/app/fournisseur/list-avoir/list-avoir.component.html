@@ -1,0 +1,181 @@
+<!--c'est la liste des avoirs d'un fournisseur -->
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <!-- header -->
+        <div class="card-header card-header-warning">
+          <h2 class="font-weight-bold cyan-lighter-hover mb-3 spacer">Historique des avoirs du fournisseur </h2>
+        </div>
+        <div class="card-body">
+          <div class="row spacerleft">
+            <div class="form-row mb-4">
+              <div class="col">
+                <input mdbInput type="date" id="date1" [(ngModel)]="d1" class="form-control form-control-sm">
+              </div>
+              <div class="col">
+                <span>To</span>
+              </div>
+              <div class="col">
+                <input mdbInput type="date" id="date2" [(ngModel)]="d2" class="form-control form-control-sm">
+              </div>
+              <div class="col">
+                <button (click)="chercherDate()"  mdbBtn class="m-0" type="button" size="sm"color="light" mdbWavesEffect>Chercher</button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- tableau -->
+          <table class="table table-striped table-responsive-md btn-table ">
+
+            <thead>
+            <tr>
+              <th>Id avoir</th>
+              <th>Date</th>
+              <th>Montant rendu</th>
+              <th>Id achat</th>
+              <th>Options</th>
+
+            </tr>
+            </thead>
+
+            <tbody *ngIf="!statut">
+            <tr *ngFor="let c of avoir?.content">
+              <td>{{c.idAvoirFr}}</td>
+              <td>{{c.dateAvoirFr}}</td>
+              <td>{{c.montantAvoirFr}}</td>
+              <td>{{c.bonAchat.idBonAchat}}</td>
+              <td>
+                <button (click)="onDetailAvoir(detailModal,c)" mdbBtn class="m-0" type="button" size="sm"color="info" mdbWavesEffect>Detail</button>
+              </td>
+            </tr>
+            </tbody>
+            <!-- Si on recherche par dates  -->
+            <tbody *ngIf="statut">
+            <tr *ngFor="let c of avoirDate?.content">
+              <td>{{c.idAvoirFr}}</td>
+              <td>{{c.dateAvoirFr}}</td>
+              <td>{{c.montantAvoirFr}}</td>
+              <td>{{c.bonAchat.idBonAchat}}</td>
+              <td>
+                <button (click)="onDetailAvoir(detailModal,c)" mdbBtn class="m-0" type="button" size="sm"color="info" mdbWavesEffect>Detail</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <!-- pagination -->
+          <nav *ngIf="!statut" aria-label="Page navigation example">
+            <ul class="pagination pg-blue">
+              <li class="page-item">
+                <a class="page-link" disabled="!currentPage>0" tabindex="-1" (click)="gotoPage(currentPage-1)" mdbWavesEffect>Precedent</a>
+              </li>
+              <li class="page-item" [ngClass]="{'page-item active':i==currentPage}" *ngFor="let p of pages; let i=index">
+                <a class="page-link" (click)="gotoPage(i)" mdbWavesEffect>{{i}}</a>
+              </li>
+
+              <li class="page-item">
+                <a class="page-link" disabled="!currentPage<totalpage-1" (click)="gotoPage(currentPage+1)" mdbWavesEffect>Suivant</a>
+              </li>
+            </ul>
+          </nav>
+          <!-- pagination ####SI ON CHERCHE PAR DATE~###### -->
+          <nav *ngIf="statut" aria-label="Page navigation example">
+            <ul class="pagination pg-blue">
+              <li class="page-item">
+                <a class="page-link" disabled="!currentPageDate>0" tabindex="-1" (click)="gotoPageDate(currentPageDate-1)" mdbWavesEffect>Previous</a>
+              </li>
+              <li class="page-item" [ngClass]="{'page-item active':i==currentPageDate}" *ngFor="let p of pagesDate; let i=index">
+                <a class="page-link" (click)="gotoPageDate(i)" mdbWavesEffect>{{i}}</a>
+              </li>
+
+              <li class="page-item">
+                <a class="page-link" disabled="!currentPageDate<totalpageDate-1" (click)="gotoPageDate(currentPageDate+1)" mdbWavesEffect>Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="modal-footer">
+          <button type="button" routerLink="/fournisseur" mdbBtn color="secondary" class="waves-light" aria-label="Close" mdbWavesEffect>Retour</button>
+
+        </div></div>
+    </div>
+    <div class="col-md-4">
+
+      <!-- Card Dark -->
+      <div class="card">
+
+        <!-- Card image -->
+        <div class="view overlay">
+          <img class="card-img-top img-thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/600px-User_icon_2.svg.png"
+               height="50">
+
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body elegant-color white-text rounded-bottom">
+
+
+          <!-- Title -->
+          <h3 class="card-title card-header-info">{{fournisseur.nomSociete}}</h3>
+          <hr class="hr-light">
+          <!-- Text -->
+
+
+
+        </div>
+
+      </div>
+      <!-- Card Dark -->
+    </div>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+
+<!-- ICI LE PRIX UNITAIRE est le prix qu'on récupère depuis la table association
+ detail_facture,ce prix peut etre le prix minimum qui se trouve dans la table Produit,
+ oubien le nouveau prix que l'admin a saisi lors de la facturation (la vente)
+ -->
+
+<div mdbModal #detailModal="mdbModal" style=" overflow-y: scroll" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content card">
+      <div class="modal-header card-header card-header-success">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="detailModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Détails</h4>
+      </div>
+
+      <div class="modal-body card-body">
+        <table class="table table-striped table-responsive-md btn-table ">
+
+          <thead>
+          <tr>
+            <th>Désignation</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+            <th>Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let d of pageDetailAvoir">
+            <td>{{d.produit.designation}}</td>
+            <td>{{d.qte}}</td>
+            <td>{{d.prix}}</td>
+            <td>{{d.qte*d.prix}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+      <div class="modal-footer card-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="detailModal.hide()" mdbWavesEffect>Fermer</button>
+
+      </div>
+    </div>
+  </div>
+</div>

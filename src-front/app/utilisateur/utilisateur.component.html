@@ -1,0 +1,30 @@
+<div class="container">
+<div class="card">
+  <div class="card-header card-header-danger">
+    <h4 class="card-title">Edit Profile</h4>
+    <p class="card-category">Complete your profile</p>
+  </div>
+  <div class="card-body">
+    <form #f="ngForm" (ngSubmit)="updateUtilisateur(f.value)" class="text-center border border-light p-5">
+      <div class="form-row">
+            <label class="text-left">Nom utilisateur :</label>
+            <input type="text"  class="form-control mb-4" placeholder="Reference" [(ngModel)]="utilisateur.nomUtilisateur" name="nomUtilisateur" required>
+      </div>
+      <div class="form-row">
+            <label class="text-left">Prenom utilisateur :</label>
+            <input type="text"  class="form-control mb-4" placeholder="Reference" [(ngModel)]="utilisateur.prenomUtilisateur" name="prenomUtilisateur" required>
+      </div>
+      <div class="form-row">
+            <label class="text-left">Username :</label>
+            <input type="text"  class="form-control mb-4" placeholder="Reference" [(ngModel)]="utilisateur.username" name="username" required>
+      </div>
+      <div class="form-row">
+            <label class="text-left">Password :</label>
+            <input type="text"  class="form-control mb-4" placeholder="Reference" [(ngModel)]="utilisateur.password" name="password" required>
+      </div>
+      <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
+      <div class="clearfix"></div>
+    </form>
+  </div>
+</div>
+</div>

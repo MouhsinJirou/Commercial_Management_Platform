@@ -1,0 +1,244 @@
+<script src="../depot/depot.component.ts"></script>
+<div class="container">
+  <!-- Confirmation mise à jour-->
+  <div class="row">
+
+    <div class="col-sm ">
+      <div  *ngIf="confirmation===true" class="alert alert-success col-sm " role="alert">
+
+        <p align="center"> <strong> Modification effectuée !</strong> </p>
+      </div>
+
+      <div *ngIf="confirmation===false" class="alert alert-danger col-sm " role="alert">
+
+        <p align="center"> <strong> Une erreur est introduite lors de la modification !</strong> </p>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="card">
+    <!-- header -->
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9"><h2 class="font-weight-bold cyan-lighter-hover mb-3 spacer">Utilisateurs</h2></div>
+        <div class="col-md-3"><button routerLink="/new-utilisateur" type="button" class="btn btn-outline-primary waves-effect">Ajouter utilisateur</button>
+        </div>
+      </div>
+    </div>
+    <!-- body -->
+    <div class="card-body">
+      <!-- search -->
+      <div class="row">
+        <div class="col-md-9">
+          <form class="form-inline md-form mr-auto mb-4">
+            <input class="form-control mr-sm-2" type="text" placeholder="chercher" aria-label="Chercher" name="nomUtilisateur" [(ngModel)]="nomUtilisateur">
+            <button (click)="chercher()" mdbBtn size="sm" gradient="aqua" rounded="true" class="my-0 waves-light" mdbWavesEffect type="submit">Chercher</button>
+          </form>
+        </div>
+
+      </div>
+      <!-- tableau -->
+      <table class="table table-striped table-responsive-md btn-table ">
+
+        <thead>
+        <tr>
+
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let c of pageUtilisateurs">
+          <td> {{c.nomUtilisateur}}</td>
+          <td> {{c.prenomUtilisateur}}</td>
+          <td> {{c.username}}</td>
+          <td> {{c.email}}</td>
+          <!--   <td> {{c.nomUtilisateur}}</td>-->
+
+
+          <td>
+            <button (click)="onUpdate(basicModal,c.idUtilisateur)" mdbBtn type="button" size="sm"color="success" mdbWavesEffect>Modifer</button>
+            <button  (click)="onDelete(c)" mdbBtn type="button" size="sm"color="danger" mdbWavesEffect>supprimer</button>
+          </td>
+        </tr>
+
+
+        </tbody>
+
+      </table>
+
+
+
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <form #f="ngForm">
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <select (change)="onSelect($event)" name="trace"  [(ngModel)]="trace" class="browser-default custom-select mb-4" required>
+              <option disabled  value="Type">Type</option>
+              <option value="Facture">Facture</option>
+              <option  value="Achat">Achat</option>
+              <option  value="Charge">Charge</option>
+            </select>
+
+          </div>
+          <div class="col-lg-6 col-md-12">
+
+            <!--<form  #f2="ngForm" class="form-inline md-form mr-auto mb-4"> -->
+            <input class="form-control mr-sm-2" type="number" placeholder="numéro/ID" aria-label="Chercher" name="type" required [(ngModel)]="idChercher">
+            <button (click)="chercherTrace()" mdbBtn size="sm"  class="btn btn-light" [disabled]="!f.valid "  type="submit">Chercher</button>
+
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="card-body">
+      <div *ngIf="respoUtilisateur" class="row">
+        <div class="col-md-2"> </div>
+        <div class="col-md-2"> </div>
+        <div class="col-md-6">
+          <p class="font-weight-bold"> Le responsable  est : {{respoUtilisateur[0]}} </p>
+        </div>
+      </div>
+      <!-- tableau Facture -->
+      <div *ngIf="etat===1" >
+        <table class="table table-striped table-responsive-md btn-table ">
+
+          <thead>
+          <tr>
+
+            <th>Numero</th>
+            <th>Date</th>
+            <th>Montant</th>
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr   >
+            <td >{{operationFacture?.idFacture}}</td>
+            <td >{{operationFacture?.dateFacture}} </td>
+            <td >{{operationFacture?.montantFacture}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- tableau Bon -->
+      <div *ngIf="etat===2" >
+        <table class="table table-striped table-responsive-md btn-table ">
+
+          <thead>
+          <tr>
+
+            <th>Numero</th>
+            <th>Date</th>
+            <th>Montant</th>
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr >
+            <td>{{operationBon.idBonAchat}}</td>
+            <td>{{operationBon.date}} </td>
+            <td>{{operationBon.montantTotal}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- tableau Charge -->
+      <div *ngIf="etat===3" >
+        <table class="table table-striped table-responsive-md btn-table ">
+
+          <thead>
+          <tr>
+
+            <th>Numero</th>
+            <th>Date</th>
+            <th>Libelle</th>
+            <th>Montant</th>
+
+
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr >
+            <td>{{operationCharge.idCharge}}</td>
+            <td>{{operationCharge.date}} </td>
+            <td>{{operationCharge.libelle}}</td>
+            <td>{{operationCharge.montant}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- editer Modal -->
+
+  <div style=" overflow-y: scroll" mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+      <div class="modal-content card">
+        <div class="modal-header card-header card-header-success">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel">Modifier le mot de passe</h4>
+        </div>
+
+        <form #f="ngForm" (ngSubmit)="updateUtilisateur(f.value)" class="text-center border border-light p-5">
+
+          <!-- nomUtilisateur-->
+          <div class="form-row mb-4">
+            <label class="text-left">Nom utilisateur</label>
+            <input type="text"  class="form-control " placeholder="nom" [(ngModel)]="utilisateur.nomUtilisateur" name="nomUtilisateur" minlength="4" required>
+          </div>
+          <!-- prenomUtilisateur-->
+          <div class="form-row mb-4">
+            <label class="text-left">Prenom utilisateur</label>
+            <input type="text"  class="form-control " placeholder="Prénom" [(ngModel)]="utilisateur.prenomUtilisateur" name="prenomUtilisateur" minlength="4" required>
+          </div>
+          <!-- username-->
+          <div class="form-row mb-4">
+            <label class="text-left">Nom d'utilisateur</label>
+            <input type="text"  class="form-control " placeholder="Nom utilisateur" [(ngModel)]="utilisateur.username" name="username" minlength="4" required>
+          </div>
+          <!-- Email-->
+          <div class="form-row mb-4">
+            <label class="text-left">Email</label>
+            <input type="email"  class="form-control " placeholder="Email" [(ngModel)]="utilisateur.email" name="email" minlength="4" required>
+          </div>
+
+          <!-- password-->
+          <div class="form-row mb-4">
+            <label class="text-left">Nouveau mot de passe</label>
+            <input type="password"  class="form-control " placeholder="mot de passe" [(ngModel)]="utilisateur.password" name="password" minlength="4" required>
+          </div>
+
+
+          <!-- repassword -->
+          <div class="form-row mb-4">
+            <label class="text-left">Confirmer le nouveau mot de passe</label>
+            <input type="password" class="form-control" placeholder="retaper mot de passe" [(ngModel)]="repassword" name="repassword" minlength="4" required>
+          </div>
+
+
+
+          <div class="modal-footer card-footer">
+            <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Fermer</button>
+            <button (click)= "basicModal.hide()" [disabled]="!f.valid" type="submit"  mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

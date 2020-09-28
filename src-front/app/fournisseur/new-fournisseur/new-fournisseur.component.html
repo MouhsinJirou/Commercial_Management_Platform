@@ -1,0 +1,77 @@
+<div class="container">
+  <!-- Confirmation-->
+  <div class="row">
+
+    <div class="col-sm ">
+      <div  *ngIf="confirmation===true" class="alert alert-success col-sm " role="alert">
+
+        <p align="center"> <strong> Le fournisseur a été bien ajouté !</strong> </p>
+      </div>
+
+      <div *ngIf="confirmation===false" class="alert alert-danger col-sm " role="alert">
+
+        <p align="center"> <strong> Une erreur est introduite lors de l'ajout du fournisseur !</strong> </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <!--header-->
+    <div class="card-header card-header-danger">
+      <div class="row">
+        <div class="col-lg-11 col-md-12">
+          <h4 class="card-title">Ajouter fournisseur</h4>
+          <p class="card-category">Veuillez saisir les informations suivantes</p>
+        </div>
+        <div class="col-lg-1 col-md-12">
+          <i class="fas fa-plus fa-4x"></i>
+        </div>
+      </div>
+    </div>
+    <!--formulaire-->
+    <div class="card-body">
+      <form #f="ngForm" (ngSubmit)="onSaveFournisseur(f.value,f)" class="text-center border border-light p-3">
+
+        <!-- Nom societé-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="text"  class="form-control mb-4" placeholder="Nom societé" ngModel name="nomSociete" required>
+          </div>
+        </div>
+
+        <!-- Adresse-->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="text"  class="form-control mb-4" placeholder="Adresse" ngModel name="adresse" required>
+          </div>
+        </div>
+        <!-- Tel -->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="tel" class="form-control mb-4" placeholder="Tel" ngModel name="tel" required>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <input type="text"  class="form-control mb-4" placeholder="Email" ngModel name="email" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-md-12"></div>
+
+          <div class="col-lg-3 col-md-12">
+            <div class="col"><button [disabled]="!f.valid" mdbBtn color="danger" block="true" class="my-10" type="submit">Ajouter</button></div>
+          </div>
+          <div class="col-lg-3 col-md-12">
+            <div class="col"><button routerLink="/fournisseur" mdbBtn color="danger" block="true" class="my-10" type="button">Retour</button></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

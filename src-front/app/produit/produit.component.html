@@ -1,0 +1,153 @@
+<div class="container">
+  <!-- Confirmation mise à jour-->
+  <div class="row">
+
+    <div class="col-sm ">
+      <div  *ngIf="confirmation===true" class="alert alert-success col-sm " role="alert">
+
+        <p align="center"> <strong> Mise à jour effectué !</strong> </p>
+      </div>
+
+      <div *ngIf="confirmation===false" class="alert alert-danger col-sm " role="alert">
+
+        <p align="center"> <strong> Une erreur est introduite lors de la modification !</strong> </p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="card">
+    <!-- header -->
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9"><h2 class="font-weight-bold cyan-lighter-hover mb-3 spacer">Produits</h2></div>
+        <div class="col-md-3"><button routerLink="/new-produit" type="button" class="btn btn-outline-primary waves-effect">Ajouter Produit</button>
+        </div>
+      </div>
+    </div>
+    <!-- body -->
+    <div class="card-body">
+      <!-- search -->
+      <div class="row">
+        <div class="col-md-9">
+          <form class="form-inline md-form mr-auto mb-4">
+            <input class="form-control mr-sm-2" type="text" name="des" placeholder="chercher produit" aria-label="Search" [(ngModel)]="des">
+            <button (click)="chercher()" mdbBtn size="sm" gradient="aqua" rounded="true" class="my-0 waves-light" mdbWavesEffect type="submit">Chercher</button>
+          </form>
+        </div>
+
+      </div>
+      <!-- tableau -->
+      <table class="table table-striped table-responsive-md btn-table ">
+
+        <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Designation</th>
+          <th>Seuil</th>
+          <th>Nv Stock</th>
+          <th>Prix A Moyen</th>
+          <th>Prix de vente</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr *ngFor="let c of pageProduits?.content let obj of array let i=index ">
+          <td>{{c.refProduit}}</td>
+          <td>{{c.designation}}</td>
+          <td>{{c.seuil}}</td>
+          <td>{{c.nivStock}}</td>
+          <td>{{array[i]| number: '1.0-2'}}</td>
+          <td>{{c.prixVenteMin}}</td>
+          <td>
+            <button (click)="onEditProduit(basicModal,c)" mdbBtn type="button" size="sm"color="info" mdbWavesEffect>modifier</button>
+            <button (click)="onDeleteProduit(c)" mdbBtn type="button" size="sm"color="danger" mdbWavesEffect>supprimer</button>
+
+          </td>
+        </tr>
+
+        </tbody>
+
+      </table>
+      <!-- pagination -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination pg-blue">
+          <li class="page-item">
+            <a class="page-link" disabled="!currentPage>0" tabindex="-1" (click)="gotoPage(currentPage-1)" mdbWavesEffect>Previous</a>
+          </li>
+          <li class="page-item" [ngClass]="{'page-item active':i==currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="page-link" (click)="gotoPage(i)" mdbWavesEffect>{{i}}</a>
+          </li>
+
+          <li class="page-item">
+            <a class="page-link" disabled="!currentPage<totalpage-1" (click)="gotoPage(currentPage+1)" mdbWavesEffect>Next</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!--Edit Modal -->
+
+
+<div style="overflow-y: scroll" mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content card">
+      <div class="modal-header card-header card-header-success">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Modification produit</h4>
+      </div>
+      <form #f="ngForm" (ngSubmit)="updateProduit(f.value)" class="text-center border border-light p-5">
+
+        <!-- Reference-->
+        <div class="form-row">
+          <label class="text-left">Reference :</label>
+          <input type="text"  class="form-control mb-4" placeholder="Reference" [(ngModel)]="produit.refProduit" name="refProduit" required>
+        </div>
+        <div class="form-row mb-4">
+          <div class="col">
+            <!-- designation -->
+            <div class="form-row">
+              <label class="text-left">Designation :</label>
+              <input type="text" class="form-control" placeholder="Designation" [(ngModel)]="produit.designation" name="designation" required>
+            </div>
+          </div>
+          <div class="col">
+            <!-- categorie -->
+            <div class="form-row">
+              <label class="text-left">Categorie :</label>
+              <input type="text" class="form-control" placeholder="Categorie" [(ngModel)]="produit.categorie" name="categorie" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seuil-->
+        <div class="form-row">
+          <label class="text-left">Seuil :</label>
+          <input type="number"  class="form-control mb-4" placeholder="Seuil" [(ngModel)]="produit.seuil" name="seuil" required>
+        </div>
+        <!-- Niveau de stock -->
+        <div class="form-row">
+          <label class="text-left">Niveau de stock :</label>
+          <input type="number" class="form-control mb-4" placeholder="Niveau de stock" [(ngModel)]="produit.nivStock" name="nivStock" required>
+        </div>
+        <!-- Prix de vente -->
+        <div class="form-row">
+          <label class="text-left">Prix de vente :</label>
+          <input type="number"  class="form-control mb-4" placeholder="Prix de vente" [(ngModel)]="produit.prixVenteMin" name="prixVenteMin" required>
+        </div>
+        <div class="modal-footer card-footer">
+          <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Fermer</button>
+          <button type="submit" mdbBtn color="primary" class="relative waves-light" (click)="basicModal.hide()" mdbWavesEffect>Enregistrer</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
